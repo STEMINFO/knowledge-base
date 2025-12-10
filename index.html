@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База знаний | Техподдержка СОЙКА</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Шапка */
+        header {
+            background-color: #1e293b;
+            color: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .search-container {
+            flex: 0 1 600px;
+            position: relative;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            font-size: 0.9rem;
+            background-color: #0f172a;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: #1e293b;
+        }
+
+        .search-result-item:hover {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* Хлебные крошки */
+        .breadcrumbs {
+            padding: 16px 0;
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumbs a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumbs span {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            margin: 0 0 24px 0;
+            gap: 24px;
+            min-height: 600px;
+        }
+
+        /* Боковая навигация */
+        .sidebar {
+            flex: 0 0 240px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3b82f6;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 6px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .nav-links a.active {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            font-weight: 500;
+        }
+
+        .nav-links i {
+            margin-right: 10px;
+            width: 16px;
+            text-align: center;
+            color: #3b82f6;
+            font-size: 0.9rem;
+        }
+
+        /* Основная область */
+        .knowledge-content {
+            flex: 1;
+        }
+
+        /* Страница: Главная */
+        .welcome-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .welcome-section h2 {
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            color: #64748b;
+            margin-bottom: 16px;
+            max-width: 800px;
+            font-size: 0.95rem;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background-color 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .action-btn:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background-color: #64748b;
+        }
+
+        .action-btn.secondary:hover {
+            background-color: #475569;
+        }
+
+        .action-btn.success {
+            background-color: #10b981;
+        }
+
+        .action-btn.success:hover {
+            background-color: #059669;
+        }
+
+        /* Страница: Скрипты */
+        .scripts-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section-header h3 {
+            color: #1e293b;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-tag {
+            padding: 6px 12px;
+            background-color: #f8fafc;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid #e2e8f0;
+            user-select: none;
+            color: #475569;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .filter-tag:hover {
+            background-color: #f1f5f9;
+            color: #475569;
+        }
+
+        .filter-tag.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .scripts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .script-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .script-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .script-tag {
+            padding: 4px 10px;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .script-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .script-copy {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.15s ease;
+            font-weight: 500;
+        }
+
+        .script-copy:hover {
+            background-color: #2563eb;
+        }
+
+        .script-copy.copied {
+            background-color: #10b981;
+        }
+
+        .script-edit {
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.15s ease;
+            font-weight: 500;
+        }
+
+        .script-edit:hover {
+            background-color: #d97706;
+        }
+
+        .script-delete {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.15s ease;
+            font-weight: 500;
+        }
+
+        .script-delete:hover {
+            background-color: #dc2626;
+        }
+
+        .script-content {
+            flex-grow: 1;
+            margin-bottom: 16px;
+            position: relative;
+            max-height: 180px;
+            overflow: hidden;
+            padding-right: 8px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .script-content p {
+            color: #374151;
+            white-space: pre-line;
+        }
+
+        .script-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6b7280;
+            font-size: 0.75rem;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 12px;
+        }
+
+        .script-meta i {
+            margin-right: 4px;
+        }
+
+        /* Страница: Добавление/редактирование скрипта */
+        .add-script-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .add-script-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: border-color 0.15s ease;
+            background-color: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 200px;
+            resize: vertical;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* Страница: Детали скрипта */
+        .script-detail {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .script-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .script-detail-header h2 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .script-detail-content {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .script-detail-content pre {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #374151;
+            overflow-x: auto;
+        }
+
+        .script-detail-meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .meta-value {
+            font-size: 0.9rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .script-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Страница: Категория */
+        .category-detail {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .category-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .category-detail-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #eff6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-detail-icon i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+        }
+
+        .category-detail-header h2 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .category-description {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .category-description p {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        /* Категории знаний на главной */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1e293b;
+            display: block;
+        }
+
+        .category-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+            color: #1e293b;
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #eff6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .category-icon i {
+            font-size: 1.4rem;
+            color: #3b82f6;
+        }
+
+        .category-card h3 {
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .category-card p {
+            color: #64748b;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+        }
+
+        .article-count {
+            color: #3b82f6;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .article-count i {
+            margin-right: 6px;
+        }
+
+        /* Популярные статьи на главной */
+        .popular-articles {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .popular-articles h3 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 1.2rem;
+        }
+
+        .articles-list {
+            list-style: none;
+        }
+
+        .articles-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .articles-list li:last-child {
+            border-bottom: none;
+        }
+
+        .articles-list a {
+            color: #475569;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.15s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .articles-list a:hover {
+            color: #3b82f6;
+        }
+
+        .articles-list i {
+            margin-right: 10px;
+            color: #3b82f6;
+            font-size: 0.8rem;
+        }
+
+        /* Футер */
+        footer {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            padding: 32px 0 16px;
+            margin-top: 40px;
+            border-top: 1px solid #334155;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 16px;
+            color: #f8fafc;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.15s ease;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .footer-section ul li a:hover {
+            color: #3b82f6;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.success {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .notification.error {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .notification.info {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: 1;
+                width: 100%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .search-container {
+                width: 100%;
+                max-width: 600px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .scripts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            
+            .section-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .script-detail-meta {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+
+        /* Стили для скроллбара */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Скрытые страницы */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Иконки в карточках скриптов */
+        .script-card-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        /* Статистика */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo" id="logo" data-page="home">
+                    <i class="fas fa-book"></i>
+                    <h1>База <span>Знаний</span></h1>
+                </a>
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск скриптов..." id="search-input">
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs container" id="breadcrumbs">
+        <a href="#" data-page="home">Главная</a>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Боковая панель навигации -->
+            <aside class="sidebar">
+                <h3>Категории</h3>
+                <ul class="nav-links">
+                    <li><a href="#" class="active" data-page="home"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="#" data-page="scripts"><i class="fas fa-comments"></i> Все скрипты</a></li>
+                    <li><a href="#" data-page="add-script"><i class="fas fa-plus-circle"></i> Добавить скрипт</a></li>
+                    <li><a href="#" data-page="stats"><i class="fas fa-chart-bar"></i> Статистика</a></li>
+                    <li><a href="#" data-page="category" data-category="problem"><i class="fas fa-wifi"></i> Подключение</a></li>
+                    <li><a href="#" data-page="category" data-category="balance"><i class="fas fa-credit-card"></i> Баланс</a></li>
+                    <li><a href="#" data-page="category" data-category="technical"><i class="fas fa-tools"></i> Тех. работы</a></li>
+                    <li><a href="#" data-page="category" data-category="speed"><i class="fas fa-tachometer-alt"></i> Скорость</a></li>
+                    <li><a href="#" data-page="category" data-category="other"><i class="fas fa-ellipsis-h"></i> Разное</a></li>
+                </ul>
+            </aside>
+
+            <!-- Основная область контента -->
+            <main class="knowledge-content">
+                <!-- Страница: Главная -->
+                <section class="page active" id="page-home">
+                    <div class="welcome-section">
+                        <h2>База знаний технической поддержки</h2>
+                        <p>Профессиональная система управления скриптами для технической поддержки компании СОЙКА. Добавляйте, редактируйте и находите нужные скрипты за несколько секунд.</p>
+                        <div class="quick-actions">
+                            <a href="#" class="action-btn" data-page="scripts">Все скрипты</a>
+                            <a href="#" class="action-btn success" data-page="add-script">Добавить новый скрипт</a>
+                            <a href="#" class="action-btn" data-page="stats">Статистика</a>
+                            <a href="#" class="action-btn secondary" id="export-data">Экспорт данных</a>
+                            <a href="#" class="action-btn secondary" id="import-data">Импорт данных</a>
+                        </div>
+                    </div>
+
+                    <!-- Статистика на главной -->
+                    <div class="stats-container" id="home-stats">
+                        <!-- Заполняется JavaScript -->
+                    </div>
+
+                    <!-- Категории знаний -->
+                    <div class="categories">
+                        <a href="#" class="category-card" data-page="category" data-category="problem">
+                            <div class="category-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <h3>Проблемы с подключением</h3>
+                            <p>Диагностика и устранение проблем с подключением к интернету, настройка оборудования.</p>
+                            <div class="article-count">
+                                <i class="fas fa-file-alt"></i>
+                                <span id="count-problem">0</span> скриптов
+                            </div>
+                        </a>
+
+                        <a href="#" class="category-card" data-page="category" data-category="speed">
+                            <div class="category-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h3>Проблемы со скоростью</h3>
+                            <p>Диагностика медленного интернета, рекомендации по улучшению скорости.</p>
+                            <div class="article-count">
+                                <i class="fas fa-file-alt"></i>
+                                <span id="count-speed">0</span> скриптов
+                            </div>
+                        </a>
+
+                        <a href="#" class="category-card" data-page="category" data-category="technical">
+                            <div class="category-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3>Технические работы</h3>
+                            <p>Информация о плановых работах, обновлениях оборудования и перерывах в обслуживании.</p>
+                            <div class="article-count">
+                                <i class="fas fa-file-alt"></i>
+                                <span id="count-technical">0</span> скриптов
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Последние добавленные скрипты -->
+                    <div class="scripts-section">
+                        <div class="section-header">
+                            <h3>Последние добавленные скрипты</h3>
+                        </div>
+                        <div class="scripts-container" id="recent-scripts">
+                            <!-- Заполняется JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Страница: Все скрипты -->
+                <section class="page" id="page-scripts">
+                    <div class="scripts-section">
+                        <div class="section-header">
+                            <h3>Все скрипты техподдержки</h3>
+                            <div class="section-actions">
+                                <button class="action-btn success" data-page="add-script">Добавить скрипт</button>
+                                <button class="action-btn" id="copy-all">Копировать все</button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-tags">
+                            <a href="#" class="filter-tag active" data-filter="all">Все скрипты</a>
+                            <a href="#" class="filter-tag" data-filter="problem">Подключение</a>
+                            <a href="#" class="filter-tag" data-filter="balance">Баланс</a>
+                            <a href="#" class="filter-tag" data-filter="technical">Тех. работы</a>
+                            <a href="#" class="filter-tag" data-filter="speed">Скорость</a>
+                            <a href="#" class="filter-tag" data-filter="other">Разное</a>
+                        </div>
+                        
+                        <div class="scripts-container" id="scripts-container">
+                            <!-- Скрипты будут загружены через JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Страница: Добавление/редактирование скрипта -->
+                <section class="page" id="page-add-script">
+                    <div class="add-script-section">
+                        <h2 id="form-title">Добавить новый скрипт</h2>
+                        <form id="script-form">
+                                                        <div class="form-row">
+                                <div class="form-group">
+                                    <label for="script-category">Категория *</label>
+                                    <select class="form-control" id="script-category" required>
+                                        <option value="">Выберите категорию</option>
+                                        <option value="problem">Проблемы с подключением</option>
+                                        <option value="balance">Баланс и оплата</option>
+                                        <option value="technical">Технические работы</option>
+                                        <option value="speed">Проблемы со скоростью</option>
+                                        <option value="other">Разное</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="script-tag">Тег *</label>
+                                    <input type="text" class="form-control" id="script-tag" 
+                                           placeholder="Например: Диагностика, Баланс, Работы" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="script-content">Содержимое скрипта *</label>
+                                <textarea class="form-control" id="script-content" 
+                                          placeholder="Введите текст скрипта..." required></textarea>
+                                <small class="form-text" style="color: #6b7280; margin-top: 4px;">
+                                    Можно использовать переносы строк, они сохранятся
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="script-usage">Когда использовать</label>
+                                <input type="text" class="form-control" id="script-usage" 
+                                       placeholder="Опишите, в каких случаях использовать этот скрипт">
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="action-btn success" id="save-script">
+                                    Сохранить скрипт
+                                </button>
+                                <button type="button" class="action-btn secondary" id="cancel-edit">
+                                    Отмена
+                                </button>
+                                <button type="button" class="action-btn" id="clear-form">
+                                    Очистить форму
+                                </button>
+                            </div>
+                            
+                            <input type="hidden" id="edit-script-id" value="">
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Страница: Статистика -->
+                <section class="page" id="page-stats">
+                    <div class="scripts-section">
+                        <div class="section-header">
+                            <h3>Статистика базы знаний</h3>
+                            <div class="section-actions">
+                                <button class="action-btn" id="refresh-stats">Обновить</button>
+                            </div>
+                        </div>
+                        
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-value" id="total-scripts">0</div>
+                                <div class="stat-label">Всего скриптов</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="total-chars">0</div>
+                                <div class="stat-label">Всего символов</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="problem-scripts">0</div>
+                                <div class="stat-label">Скрипты по подключению</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="balance-scripts">0</div>
+                                <div class="stat-label">Скрипты по балансу</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="technical-scripts">0</div>
+                                <div class="stat-label">Технические работы</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="speed-scripts">0</div>
+                                <div class="stat-label">Проблемы со скоростью</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="other-scripts">0</div>
+                                <div class="stat-label">Разные скрипты</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="last-added">-</div>
+                                <div class="stat-label">Последнее добавление</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 30px;">
+                            <h4 style="margin-bottom: 15px; color: #1e293b;">Управление данными</h4>
+                            <div class="quick-actions">
+                                <button class="action-btn" id="export-json">Экспорт в JSON</button>
+                                <button class="action-btn secondary" id="import-json">Импорт из JSON</button>
+                                <button class="action-btn" id="backup-data">Создать резервную копию</button>
+                                <button class="action-btn secondary" id="restore-data">Восстановить из копии</button>
+                                <button class="action-btn error" id="clear-all-data" style="background-color: #ef4444;">Очистить все данные</button>
+                            </div>
+                            <div style="margin-top: 20px; padding: 15px; background-color: #fef2f2; border-radius: 6px; border: 1px solid #fecaca;">
+                                <p style="color: #dc2626; font-size: 0.85rem; margin-bottom: 10px;">
+                                    <i class="fas fa-exclamation-triangle"></i> Внимание: Очистка данных удалит все сохраненные скрипты без возможности восстановления!
+                                </p>
+                                <button class="action-btn error" id="confirm-clear-all" style="background-color: #dc2626; display: none;">
+                                    Подтвердить очистку
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Страница: Детали скрипта -->
+                <section class="page" id="page-script">
+                    <div class="script-detail">
+                        <div class="script-detail-header">
+                            <h2 id="script-detail-title">Название скрипта</h2>
+                            <div class="script-actions">
+                                <button class="script-copy" id="copy-script-detail">Копировать</button>
+                                <button class="script-edit" id="edit-script-detail">Редактировать</button>
+                                <button class="script-delete" id="delete-script-detail">Удалить</button>
+                            </div>
+                        </div>
+                        
+                        <div class="script-detail-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Категория</div>
+                                <div class="meta-value" id="script-detail-category"></div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Тег</div>
+                                <div class="meta-value" id="script-detail-tag"></div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Использование</div>
+                                <div class="meta-value" id="script-detail-usage"></div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Дата создания</div>
+                                <div class="meta-value" id="script-detail-date"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="script-detail-content">
+                            <pre id="script-detail-content"></pre>
+                        </div>
+                        
+                        <div class="script-actions">
+                            <a href="#" class="action-btn" data-page="scripts">Все скрипты</a>
+                            <a href="#" class="action-btn" id="back-to-category">К категории</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Страница: Категория -->
+                <section class="page" id="page-category">
+                    <div class="category-detail">
+                        <div class="category-detail-header">
+                            <div class="category-detail-icon" id="category-detail-icon">
+                                <i class="fas fa-folder"></i>
+                            </div>
+                            <h2 id="category-detail-title">Название категории</h2>
+                        </div>
+                        
+                        <div class="category-description">
+                            <p id="category-detail-description">Описание категории</p>
+                        </div>
+                        
+                        <div class="scripts-container" id="category-scripts-container">
+                            <!-- Скрипты категории будут загружены через JavaScript -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>База знаний</h4>
+                    <ul>
+                        <li><a href="#" data-page="scripts">Все скрипты</a></li>
+                        <li><a href="#" data-page="add-script">Добавить скрипт</a></li>
+                        <li><a href="#" data-page="stats">Статистика</a></li>
+                        <li><a href="#" data-page="home">Главная</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Категории</h4>
+                    <ul>
+                        <li><a href="#" data-page="category" data-category="problem">Подключение</a></li>
+                        <li><a href="#" data-page="category" data-category="balance">Баланс</a></li>
+                        <li><a href="#" data-page="category" data-category="technical">Тех. работы</a></li>
+                        <li><a href="#" data-page="category" data-category="speed">Скорость</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Экспорт</h4>
+                    <ul>
+                        <li><a href="#" id="export-footer-json">Экспорт JSON</a></li>
+                        <li><a href="#" id="export-footer-txt">Экспорт TXT</a></li>
+                        <li><a href="#" id="backup-footer">Резервная копия</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 База знаний компании СОЙКА. Все скрипты сохраняются в вашем браузере.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Скрытый input для импорта файлов -->
+    <input type="file" id="file-import" accept=".json,.txt" style="display: none;">
+
+    <script>
+        // Массив скриптов (загружается из localStorage)
+        let scripts = [];
+        
+        // Информация о категориях
+        const categories = {
+            "problem": {
+                title: "Проблемы с подключением",
+                description: "Диагностика и устранение проблем с подключением к интернету, настройка оборудования, проверка физического соединения.",
+                icon: "fa-wifi",
+                color: "#3b82f6"
+            },
+            "balance": {
+                title: "Баланс и оплата",
+                description: "Работа с личным кабинетом, проверка баланса, вопросы по оплате и тарифам.",
+                icon: "fa-credit-card",
+                color: "#10b981"
+            },
+            "technical": {
+                title: "Технические работы",
+                description: "Информация о плановых работах, обновлениях оборудования и перерывах в обслуживании.",
+                icon: "fa-tools",
+                color: "#f59e0b"
+            },
+            "speed": {
+                title: "Проблемы со скоростью",
+                description: "Диагностика медленного интернета, рекомендации по улучшению скорости, замеры скорости.",
+                icon: "fa-tachometer-alt",
+                color: "#ef4444"
+            },
+            "other": {
+                title: "Разное",
+                description: "Прочие скрипты: вопросы конфиденциальности, подключение новых абонентов, общая информация.",
+                icon: "fa-ellipsis-h",
+                color: "#8b5cf6"
+            }
+        };
+
+        // Текущее состояние приложения
+        let currentPage = 'home';
+        let currentFilter = 'all';
+        let currentCategory = '';
+        let currentScriptId = null;
+        let editMode = false;
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем скрипты из localStorage
+            loadScriptsFromStorage();
+            
+            // Инициализируем интерфейс
+            initializeInterface();
+            
+            // Настраиваем обработчики событий
+            setupEventHandlers();
+            
+            // Загружаем начальные данные
+            loadHomePage();
+        });
+
+        // Загрузка скриптов из localStorage
+        function loadScriptsFromStorage() {
+            const storedScripts = localStorage.getItem('knowledgeBaseScripts');
+            if (storedScripts) {
+                try {
+                    scripts = JSON.parse(storedScripts);
+                } catch (e) {
+                    console.error('Ошибка загрузки скриптов:', e);
+                    scripts = [];
+                }
+            } else {
+                // Загружаем начальные скрипты
+                scripts = getDefaultScripts();
+                saveScriptsToStorage();
+            }
+            
+            // Сортируем скрипты по дате (новые сверху)
+            scripts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
+        // Получение начальных скриптов
+        function getDefaultScripts() {
+            return [
+                {
+                    id: Date.now() + 1,
+                    category: "problem",
+                    tag: "Подключение",
+                    content: "Здравствуйте!\nНа текущий момент по линии компании - неполадок не наблюдаем, которые могут влиять на подключение.\nТрафик поступает исправно, сессию Вашего роутера наблюдаем в системе.\nПриостановок/отключений с нашей стороны не производилось.\n\nВ целях профилактики - сбросили текущую сессию, произведите перезагрузку роутера.",
+                    usage: "При отсутствии проблем на стороне провайдера",
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 2,
+                    category: "problem",
+                    tag: "Диагностика",
+                    content: "Здравствуйте.\nПорт подключения по адресу наблюдаю как 'отключенный'.\nДо роутера должен быть установлен медиаконвертер с 6-тью индикаторами сбоку.\nСколько индикаторов из 6-ти сейчас горит?",
+                    usage: "При отсутствии линка на порту",
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 3,
+                    category: "balance",
+                    tag: "Личный кабинет",
+                    content: "Здравствуйте!\nПросматривать информацию о балансе вы можете через личный кабинет:\nПерейдите на сайт:\nhttps://slavyansk-na-kubani.soyka.su/\nИ выберите вкладку Личный кабинет:\nЛогин - номер договора\nПароль – запросите через 'Забыли пароль'(если забыли)",
+                    usage: "Запрос о проверке баланса",
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                }
+            ];
+        }
+
+        // Сохранение скриптов в localStorage
+        function saveScriptsToStorage() {
+            localStorage.setItem('knowledgeBaseScripts', JSON.stringify(scripts));
+            updateStats(); // Обновляем статистику
+        }
+
+        // Инициализация интерфейса
+        function initializeInterface() {
+            // Настраиваем навигацию
+            setupNavigation();
+            
+            // Настраиваем поиск
+            setupSearch();
+            
+            // Настраиваем форму
+            setupForm();
+        }
+
+        // Настройка навигации
+        function setupNavigation() {
+            // Обработчики для навигации в сайдбаре
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const page = this.dataset.page;
+                    const category = this.dataset.category || '';
+                    
+                    if (page === 'category' && category) {
+                        navigateToCategory(category);
+                    } else {
+                        navigateToPage(page);
+                    }
+                });
+            });
+            
+            // Обработчики для быстрых действий
+            document.querySelectorAll('.action-btn[data-page]').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const page = this.dataset.page;
+                    const category = this.dataset.category || '';
+                    
+                    if (page === 'category' && category) {
+                        navigateToCategory(category);
+                    } else {
+                        navigateToPage(page);
+                    }
+                });
+            });
+            
+            // Обработчики для карточек категорий
+            document.querySelectorAll('.category-card[data-page]').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const page = this.dataset.page;
+                    const category = this.dataset.category || '';
+                    
+                    if (page === 'category' && category) {
+                        navigateToCategory(category);
+                    }
+                });
+            });
+            
+            // Обработчики для фильтров скриптов
+            document.querySelectorAll('.filter-tag[data-filter]').forEach(tag => {
+                tag.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const filter = this.dataset.filter;
+                    navigateToFilter(filter);
+                });
+            });
+            
+            // Обработчик для логотипа
+            document.getElementById('logo').addEventListener('click', function(e) {
+                e.preventDefault();
+                navigateToPage('home');
+            });
+        }
+
+        // Навигация на страницу
+        function navigateToPage(page) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+            
+            // Показываем нужную страницу
+            const pageElement = document.getElementById(`page-${page}`);
+            if (pageElement) {
+                pageElement.classList.add('active');
+                currentPage = page;
+                
+                // Обновляем активную ссылку в навигации
+                updateActiveNavLink(page);
+                
+                // Обновляем хлебные крошки
+                updateBreadcrumbs(page);
+                
+                // Загружаем контент для страницы
+                loadPageContent(page);
+            }
+        }
+
+        // Обновление активной ссылки в навигации
+        function updateActiveNavLink(page) {
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === page) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Навигация к категории
+        function navigateToCategory(category) {
+            currentCategory = category;
+            navigateToPage('category');
+        }
+
+        // Навигация к фильтру
+        function navigateToFilter(filter) {
+            currentFilter = filter;
+            
+            // Обновляем активный фильтр
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.dataset.filter === filter) {
+                    tag.classList.add('active');
+                }
+            });
+            
+            // Загружаем скрипты с фильтром
+            loadScriptsToContainer(filter);
+        }
+
+        // Обновление хлебных крошек
+        function updateBreadcrumbs(page) {
+            const breadcrumbs = document.getElementById('breadcrumbs');
+            let breadcrumbHTML = '<a href="#" data-page="home">Главная</a>';
+            
+            if (page === 'scripts') {
+                breadcrumbHTML += ' / <span>Все скрипты</span>';
+            } else if (page === 'add-script') {
+                breadcrumbHTML += ' / <span>' + (editMode ? 'Редактирование скрипта' : 'Добавление скрипта') + '</span>';
+            } else if (page === 'stats') {
+                breadcrumbHTML += ' / <span>Статистика</span>';
+            } else if (page === 'script' && currentScriptId) {
+                const script = scripts.find(s => s.id == currentScriptId);
+                if (script) {
+                    breadcrumbHTML += ` / <a href="#" data-page="scripts">Все скрипты</a>`;
+                    breadcrumbHTML += ` / <span>${script.tag}</span>`;
+                }
+            } else if (page === 'category' && currentCategory) {
+                const category = categories[currentCategory];
+                if (category) {
+                    breadcrumbHTML += ` / <span>${category.title}</span>`;
+                }
+            }
+            
+            breadcrumbs.innerHTML = breadcrumbHTML;
+            
+            // Добавляем обработчики для ссылок в хлебных крошках
+            breadcrumbs.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    navigateToPage(page);
+                });
+            });
+        }
+
+        // Загрузка контента для страницы
+        function loadPageContent(page) {
+            if (page === 'home') {
+                loadHomePage();
+            } else if (page === 'scripts') {
+                loadScriptsToContainer(currentFilter);
+            } else if (page === 'add-script') {
+                // Форма уже загружена
+            } else if (page === 'stats') {
+                loadStatsPage();
+            } else if (page === 'script' && currentScriptId) {
+                loadScriptDetail(currentScriptId);
+            } else if (page === 'category' && currentCategory) {
+                loadCategoryDetail(currentCategory);
+            }
+        }
+
+        // Загрузка главной страницы
+        function loadHomePage() {
+            // Обновляем статистику категорий
+            updateCategoryCounts();
+            
+            // Загружаем статистику
+            updateStats();
+            
+            // Показываем последние скрипты
+            loadRecentScripts();
+        }
+
+        // Обновление счетчиков категорий
+        function updateCategoryCounts() {
+            const counts = {
+                problem: 0,
+                balance: 0,
+                technical: 0,
+                speed: 0,
+                other: 0
+            };
+            
+            scripts.forEach(script => {
+                if (counts.hasOwnProperty(script.category)) {
+                    counts[script.category]++;
+                }
+            });
+            
+            // Обновляем отображение
+            document.getElementById('count-problem').textContent = counts.problem;
+            document.getElementById('count-speed').textContent = counts.speed;
+            document.getElementById('count-technical').textContent = counts.technical;
+        }
+
+        // Загрузка последних скриптов
+        function loadRecentScripts() {
+            const container = document.getElementById('recent-scripts');
+            container.innerHTML = '';
+            
+            // Берем последние 6 скриптов
+            const recentScripts = scripts.slice(0, 6);
+            
+            if (recentScripts.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #666; padding: 30px;">Скриптов пока нет. Добавьте первый!</p>';
+                return;
+            }
+            
+            recentScripts.forEach(script => {
+                const scriptCard = createScriptCard(script);
+                container.appendChild(scriptCard);
+            });
+        }
+
+        // Создание карточки скрипта
+        function createScriptCard(script) {
+            const card = document.createElement('div');
+            card.className = 'script-card';
+            
+            const category = categories[script.category] || { title: script.category };
+            const date = new Date(script.createdAt).toLocaleDateString('ru-RU');
+            
+            card.innerHTML = `
+                <div class="script-header">
+                    <span class="script-tag">${script.tag}</span>
+                    <div class="script-actions">
+                        <button class="script-copy" data-id="${script.id}">Копировать</button>
+                    </div>
+                </div>
+                <div class="script-content">
+                    <p>${truncateText(script.content, 200)}</p>
+                </div>
+                <div class="script-meta">
+                    <span><i class="fas fa-folder"></i> ${category.title}</span>
+                    <span><i class="far fa-calendar"></i> ${date}</span>
+                </div>
+                <a href="#" class="script-card-link" data-page="script" data-script="${script.id}"></a>
+            `;
+            
+            // Добавляем обработчики
+            const link = card.querySelector('.script-card-link');
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                navigateToScript(script.id);
+            });
+            
+            const copyBtn = card.querySelector('.script-copy');
+            copyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                copyToClipboard(script.content);
+            });
+            
+            return card;
+        }
+
+        // Обрезка текста
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        // Навигация к скрипту
+        function navigateToScript(scriptId) {
+            currentScriptId = scriptId;
+            navigateToPage('script');
+        }
+
+        // Загрузка скриптов в контейнер
+        function loadScriptsToContainer(filter = 'all') {
+            const container = document.getElementById('scripts-container');
+            container.innerHTML = '';
+            
+            const filteredScripts = filter === 'all' 
+                ? scripts 
+                : scripts.filter(script => script.category === filter);
+            
+            if (filteredScripts.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #666; padding: 30px;">Скрипты не найдены</p>';
+                return;
+            }
+            
+            filteredScripts.forEach(script => {
+                const scriptCard = createScriptCard(script);
+                container.appendChild(scriptCard);
+            });
+        }
+
+        // Загрузка деталей скрипта
+        function loadScriptDetail(scriptId) {
+            const script = scripts.find(s => s.id == scriptId);
+            if (!script) {
+                showNotification('Скрипт не найден', 'error');
+                navigateToPage('scripts');
+                return;
+            }
+            
+            const category = categories[script.category] || { title: script.category };
+            const date = new Date(script.createdAt).toLocaleDateString('ru-RU');
+            const updatedDate = new Date(script.updatedAt).toLocaleDateString('ru-RU');
+            
+            document.getElementById('script-detail-title').textContent = script.tag;
+            document.getElementById('script-detail-category').textContent = category.title;
+            document.getElementById('script-detail-tag').textContent = script.tag;
+            document.getElementById('script-detail-usage').textContent = script.usage || 'Не указано';
+            document.getElementById('script-detail-date').textContent = `${date} (обновлено: ${updatedDate})`;
+            document.getElementById('script-detail-content').textContent = script.content;
+            
+            // Настраиваем кнопки
+            const copyButton = document.getElementById('copy-script-detail');
+            copyButton.onclick = function() {
+                copyToClipboard(script.content);
+            };
+            
+            const editButton = document.getElementById('edit-script-detail');
+            editButton.onclick = function() {
+                editScript(script.id);
+            };
+            
+            const deleteButton = document.getElementById('delete-script-detail');
+            deleteButton.onclick = function() {
+                deleteScript(script.id);
+            };
+            
+            // Настраиваем кнопку "К категории"
+            const backButton = document.getElementById('back-to-category');
+            backButton.dataset.page = 'category';
+            backButton.dataset.category = script.category;
+            backButton.onclick = function(e) {
+                e.preventDefault();
+                navigateToCategory(script.category);
+            };
+        }
+
+        // Загрузка деталей категории
+        function loadCategoryDetail(categoryId) {
+            const category = categories[categoryId];
+            if (!category) {
+                showNotification('Категория не найдена', 'error');
+                navigateToPage('home');
+                return;
+            }
+            
+            document.getElementById('category-detail-title').textContent = category.title;
+            document.getElementById('category-detail-description').textContent = category.description;
+            
+            // Устанавливаем иконку категории
+            const iconElement = document.getElementById('category-detail-icon');
+            iconElement.innerHTML = `<i class="fas ${category.icon}"></i>`;
+            iconElement.style.backgroundColor = `${category.color}15`;
+            iconElement.querySelector('i').style.color = category.color;
+            
+            // Загружаем скрипты этой категории
+            const container = document.getElementById('category-scripts-container');
+            container.innerHTML = '';
+            
+            const categoryScripts = scripts.filter(script => script.category === categoryId);
+            
+            if (categoryScripts.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #666; padding: 30px;">В этой категории пока нет скриптов</p>';
+                return;
+            }
+            
+            categoryScripts.forEach(script => {
+                const scriptCard = createScriptCard(script);
+                container.appendChild(scriptCard);
+            });
+        }
+
+        // Настройка формы
+        function setupForm() {
+            const form = document.getElementById('script-form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveScript();
+            });
+            
+            // Кнопка отмены
+            document.getElementById('cancel-edit').addEventListener('click', function() {
+                if (editMode) {
+                    cancelEdit();
+                } else {
+                    navigateToPage('scripts');
+                }
+            });
+            
+            // Кнопка очистки формы
+            document.getElementById('clear-form').addEventListener('click', function() {
+                clearForm();
+            });
+        }
+
+        // Сохранение скрипта
+        function saveScript() {
+            const category = document.getElementById('script-category').value;
+            const tag = document.getElementById('script-tag').value.trim();
+            const content = document.getElementById('script-content').value.trim();
+            const usage = document.getElementById('script-usage').value.trim();
+            const scriptId = document.getElementById('edit-script-id').value;
+            
+            // Валидация
+            if (!category || !tag || !content) {
+                showNotification('Заполните обязательные поля: категория, тег и содержимое', 'error');
+                return;
+            }
+            
+            const now = new Date().toISOString();
+            
+            if (editMode && scriptId) {
+                // Редактирование существующего скрипта
+                const index = scripts.findIndex(s => s.id == scriptId);
+                if (index !== -1) {
+                    scripts[index] = {
+                        ...scripts[index],
+                        category,
+                        tag,
+                        content,
+                        usage,
+                        updatedAt: now
+                    };
+                }
+            } else {
+                // Добавление нового скрипта
+                const newScript = {
+                    id: Date.now(),
+                    category,
+                    tag,
+                    content,
+                    usage,
+                    createdAt: now,
+                    updatedAt: now
+                };
+                
+                scripts.unshift(newScript); // Добавляем в начало
+            }
+            
+            // Сохраняем в хранилище
+            saveScriptsToStorage();
+            
+            // Показываем уведомление
+            showNotification(editMode ? 'Скрипт обновлен!' : 'Скрипт добавлен!', 'success');
+            
+            // Сбрасываем режим редактирования
+            editMode = false;
+            document.getElementById('form-title').textContent = 'Добавить новый скрипт';
+            document.getElementById('save-script').textContent = 'Сохранить скрипт';
+            
+            // Очищаем форму
+            clearForm();
+            
+            // Переходим на страницу со скриптами
+            navigateToPage('scripts');
+        }
+
+        // Редактирование скрипта
+        function editScript(scriptId) {
+            const script = scripts.find(s => s.id == scriptId);
+            if (!script) return;
+            
+            // Заполняем форму
+            document.getElementById('script-category').value = script.category;
+            document.getElementById('script-tag').value = script.tag;
+            document.getElementById('script-content').value = script.content;
+            document.getElementById('script-usage').value = script.usage || '';
+            document.getElementById('edit-script-id').value = script.id;
+            
+            // Устанавливаем режим редактирования
+            editMode = true;
+            document.getElementById('form-title').textContent = 'Редактировать скрипт';
+            document.getElementById('save-script').textContent = 'Обновить скрипт';
+            
+            // Переходим на страницу формы
+            navigateToPage('add-script');
+        }
+
+        // Отмена редактирования
+        function cancelEdit() {
+            editMode = false;
+            clearForm();
+            document.getElementById('form-title').textContent = 'Добавить новый скрипт';
+            document.getElementById('save-script').textContent = 'Сохранить скрипт';
+            navigateToPage('scripts');
+        }
+
+        // Очистка формы
+        function clearForm() {
+            document.getElementById('script-form').reset();
+            document.getElementById('edit-script-id').value = '';
+        }
+
+        // Удаление скрипта
+        function deleteScript(scriptId) {
+            if (confirm('Вы уверены, что хотите удалить этот скрипт?')) {
+                const index = scripts.findIndex(s => s.id == scriptId);
+                if (index !== -1) {
+                    scripts.splice(index, 1);
+                    saveScriptsToStorage();
+                    showNotification('Скрипт удален', 'success');
+                    navigateToPage('scripts');
+                }
+            }
+        }
+
+        // Настройка поиска
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                
+                if (searchTerm.length < 2) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+                
+                const filteredScripts = scripts.filter(script => 
+                    script.content.toLowerCase().includes(searchTerm) ||
+                    script.tag.toLowerCase().includes(searchTerm) ||
+                    script.usage.toLowerCase().includes(searchTerm)
+                );
+                
+                displaySearchResults(filteredScripts, searchTerm);
+            });
+            
+            // Скрываем результаты поиска при клике вне поиска
+            document.addEventListener('click', function(e) {
+                if (!searchContainer.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+            
+            const searchContainer = document.querySelector('.search-container');
+        }
+
+        // Отображение результатов поиска
+        function displaySearchResults(filteredScripts, searchTerm) {
+            const searchResults = document.getElementById('search-results');
+            searchResults.innerHTML = '';
+            
+            if (filteredScripts.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">По запросу ничего не найдено</div>';
+                searchResults.style.display = 'block';
+                return;
+            }
+            
+            filteredScripts.slice(0, 10).forEach(script => {
+                const resultItem = document.createElement('a');
+                resultItem.className = 'search-result-item';
+                resultItem.href = '#';
+                
+                const category = categories[script.category] || { title: script.category };
+                
+                resultItem.innerHTML = `
+                    <span>${highlightText(script.tag, searchTerm)}</span>
+                    <
+                                        <span class="result-tag">${category.title}</span>
+                `;
+                
+                searchResults.appendChild(resultItem);
+                
+                // Добавляем обработчик для перехода к скрипту
+                resultItem.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navigateToScript(script.id);
+                    
+                    // Очищаем поиск и скрываем результаты
+                    document.getElementById('search-input').value = '';
+                    searchResults.style.display = 'none';
+                });
+            });
+            
+            searchResults.style.display = 'block';
+        }
+
+        // Подсветка текста в результатах поиска
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        // Настройка обработчиков событий
+        function setupEventHandlers() {
+            // Экспорт данных
+            document.getElementById('export-data').addEventListener('click', exportData);
+            document.getElementById('export-json').addEventListener('click', exportData);
+            document.getElementById('export-footer-json').addEventListener('click', exportData);
+            
+            // Импорт данных
+            document.getElementById('import-data').addEventListener('click', () => document.getElementById('file-import').click());
+            document.getElementById('import-json').addEventListener('click', () => document.getElementById('file-import').click());
+            
+            // Обработка выбора файла для импорта
+            document.getElementById('file-import').addEventListener('change', importData);
+            
+            // Копирование всех скриптов
+            document.getElementById('copy-all').addEventListener('click', copyAllScripts);
+            
+            // Обновление статистики
+            document.getElementById('refresh-stats').addEventListener('click', loadStatsPage);
+            
+            // Резервное копирование
+            document.getElementById('backup-data').addEventListener('click', backupData);
+            document.getElementById('backup-footer').addEventListener('click', backupData);
+            
+            // Восстановление
+            document.getElementById('restore-data').addEventListener('click', restoreData);
+            
+            // Очистка данных
+            document.getElementById('clear-all-data').addEventListener('click', showClearConfirmation);
+            document.getElementById('confirm-clear-all').addEventListener('click', clearAllData);
+            
+            // Экспорт в TXT
+            document.getElementById('export-footer-txt').addEventListener('click', exportToTxt);
+        }
+
+        // Функция копирования в буфер обмена
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Скрипт скопирован в буфер обмена!', 'success');
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                showNotification('Не удалось скопировать текст', 'error');
+            });
+        }
+
+        // Копирование всех скриптов
+        function copyAllScripts() {
+            const allScriptsText = scripts.map(script => 
+                `=== ${script.tag} ===\nКатегория: ${categories[script.category]?.title || script.category}\nИспользование: ${script.usage || 'Не указано'}\n\n${script.content}\n\n`
+            ).join('');
+            
+            copyToClipboard(allScriptsText);
+        }
+
+        // Загрузка страницы статистики
+        function loadStatsPage() {
+            updateStats();
+        }
+
+        // Обновление статистики
+        function updateStats() {
+            // Общие счетчики
+            const totalScripts = scripts.length;
+            const totalChars = scripts.reduce((sum, script) => sum + script.content.length, 0);
+            
+            // Счетчики по категориям
+            const counts = {
+                problem: 0,
+                balance: 0,
+                technical: 0,
+                speed: 0,
+                other: 0
+            };
+            
+            scripts.forEach(script => {
+                if (counts.hasOwnProperty(script.category)) {
+                    counts[script.category]++;
+                }
+            });
+            
+            // Последняя дата добавления
+            const lastAdded = scripts.length > 0 
+                ? new Date(scripts[0].createdAt).toLocaleDateString('ru-RU')
+                : '-';
+            
+            // Обновляем отображение
+            document.getElementById('total-scripts').textContent = totalScripts;
+            document.getElementById('total-chars').textContent = totalChars.toLocaleString('ru-RU');
+            document.getElementById('problem-scripts').textContent = counts.problem;
+            document.getElementById('balance-scripts').textContent = counts.balance;
+            document.getElementById('technical-scripts').textContent = counts.technical;
+            document.getElementById('speed-scripts').textContent = counts.speed;
+            document.getElementById('other-scripts').textContent = counts.other;
+            document.getElementById('last-added').textContent = lastAdded;
+            
+            // Обновляем статистику на главной
+            updateHomeStats(totalScripts, totalChars, counts);
+        }
+
+        // Обновление статистики на главной
+        function updateHomeStats(totalScripts, totalChars, counts) {
+            const statsContainer = document.getElementById('home-stats');
+            
+            const stats = [
+                { label: 'Всего скриптов', value: totalScripts, color: '#3b82f6' },
+                { label: 'Всего символов', value: totalChars.toLocaleString('ru-RU'), color: '#10b981' },
+                { label: 'Проблемы с подключением', value: counts.problem, color: '#3b82f6' },
+                { label: 'Баланс и оплата', value: counts.balance, color: '#10b981' },
+                { label: 'Технические работы', value: counts.technical, color: '#f59e0b' },
+                { label: 'Проблемы со скоростью', value: counts.speed, color: '#ef4444' },
+                { label: 'Разные скрипты', value: counts.other, color: '#8b5cf6' }
+            ];
+            
+            statsContainer.innerHTML = '';
+            
+            stats.forEach(stat => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+                
+                statCard.innerHTML = `
+                    <div class="stat-value" style="color: ${stat.color}">${stat.value}</div>
+                    <div class="stat-label">${stat.label}</div>
+                `;
+                
+                statsContainer.appendChild(statCard);
+            });
+        }
+
+        // Экспорт данных в JSON
+        function exportData() {
+            const data = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                scriptCount: scripts.length,
+                scripts: scripts
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `база-знаний-экспорт-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Данные экспортированы в JSON файл', 'success');
+        }
+
+        // Импорт данных из JSON
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (!importedData.scripts || !Array.isArray(importedData.scripts)) {
+                        throw new Error('Некорректный формат файла');
+                    }
+                    
+                    if (confirm(`Найдено ${importedData.scripts.length} скриптов. Заменить текущие данные?`)) {
+                        scripts = importedData.scripts;
+                        saveScriptsToStorage();
+                        loadScriptsToContainer(currentFilter);
+                        updateStats();
+                        showNotification('Данные успешно импортированы!', 'success');
+                    }
+                } catch (error) {
+                    console.error('Ошибка импорта:', error);
+                    showNotification('Ошибка при импорте файла', 'error');
+                }
+            };
+            
+            reader.readAsText(file);
+            
+            // Сбрасываем значение input, чтобы можно было загрузить тот же файл снова
+            event.target.value = '';
+        }
+
+        // Резервное копирование
+        function backupData() {
+            const backup = {
+                version: '1.0',
+                backupDate: new Date().toISOString(),
+                scriptCount: scripts.length,
+                scripts: scripts
+            };
+            
+            localStorage.setItem('knowledgeBaseBackup', JSON.stringify(backup));
+            showNotification('Резервная копия создана!', 'success');
+        }
+
+        // Восстановление из резервной копии
+        function restoreData() {
+            const backup = localStorage.getItem('knowledgeBaseBackup');
+            if (!backup) {
+                showNotification('Резервная копия не найдена', 'error');
+                return;
+            }
+            
+            try {
+                const backupData = JSON.parse(backup);
+                
+                if (confirm(`Восстановить резервную копию от ${new Date(backupData.backupDate).toLocaleDateString('ru-RU')}?`)) {
+                    scripts = backupData.scripts || [];
+                    saveScriptsToStorage();
+                    loadScriptsToContainer(currentFilter);
+                    updateStats();
+                    showNotification('Данные восстановлены из резервной копии!', 'success');
+                }
+            } catch (error) {
+                console.error('Ошибка восстановления:', error);
+                showNotification('Ошибка при восстановлении данных', 'error');
+            }
+        }
+
+        // Показать подтверждение очистки
+        function showClearConfirmation() {
+            const confirmBtn = document.getElementById('confirm-clear-all');
+            confirmBtn.style.display = 'inline-block';
+            
+            // Скрываем кнопку через 10 секунд
+            setTimeout(() => {
+                confirmBtn.style.display = 'none';
+            }, 10000);
+        }
+
+        // Очистка всех данных
+        function clearAllData() {
+            if (confirm('ВЫ УВЕРЕНЫ? Это удалит ВСЕ скрипты без возможности восстановления!')) {
+                scripts = [];
+                saveScriptsToStorage();
+                loadScriptsToContainer(currentFilter);
+                updateStats();
+                showNotification('Все данные очищены', 'info');
+                
+                // Скрываем кнопку подтверждения
+                document.getElementById('confirm-clear-all').style.display = 'none';
+            }
+        }
+
+        // Экспорт в TXT
+        function exportToTxt() {
+            let txtContent = 'БАЗА ЗНАНИЙ ТЕХПОДДЕРЖКИ\n';
+            txtContent += '============================\n\n';
+            txtContent += `Экспорт от: ${new Date().toLocaleDateString('ru-RU')}\n`;
+            txtContent += `Всего скриптов: ${scripts.length}\n\n`;
+            
+            // Группируем скрипты по категориям
+            const scriptsByCategory = {};
+            
+            scripts.forEach(script => {
+                const category = categories[script.category]?.title || script.category;
+                if (!scriptsByCategory[category]) {
+                    scriptsByCategory[category] = [];
+                }
+                scriptsByCategory[category].push(script);
+            });
+            
+            // Добавляем скрипты по категориям
+            for (const [category, categoryScripts] of Object.entries(scriptsByCategory)) {
+                txtContent += `\n\n${'='.repeat(50)}\n`;
+                txtContent += `${category.toUpperCase()}\n`;
+                txtContent += `${'='.repeat(50)}\n\n`;
+                
+                categoryScripts.forEach((script, index) => {
+                    txtContent += `${index + 1}. ${script.tag}\n`;
+                    txtContent += `Использование: ${script.usage || 'Не указано'}\n`;
+                    txtContent += `Дата: ${new Date(script.createdAt).toLocaleDateString('ru-RU')}\n`;
+                    txtContent += `\n${script.content}\n`;
+                    txtContent += `\n${'-'.repeat(50)}\n\n`;
+                });
+            }
+            
+            // Создаем и скачиваем файл
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `база-знаний-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Данные экспортированы в TXT файл', 'success');
+        }
+
+        // Показать уведомление
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Вспомогательные функции
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    </script>
+</body>
+</html>
+                           
