@@ -28,6 +28,13 @@
             --shadow: 0 6px 18px rgba(42, 92, 170, 0.08);
             --shadow-hover: 0 12px 24px rgba(42, 92, 170, 0.15);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            /* Новогодние цвета */
+            --new-year-red: #D32F2F;
+            --new-year-green: #2E7D32;
+            --new-year-gold: #FFD700;
+            --new-year-silver: #C0C0C0;
+            --new-year-blue: #1976D2;
         }
 
         * {
@@ -56,6 +63,22 @@
             padding: 0 20px;
         }
 
+        /* Новогодний фон с анимацией снежинок */
+        @keyframes snow {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         /* Login Screen */
         .login-screen {
             display: flex;
@@ -63,28 +86,87 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 30%, #4a69bd 70%, #6a89cc 100%);
             position: relative;
             overflow: hidden;
         }
 
-        .login-screen::before {
-            content: '';
+        /* Новогодние украшения */
+        .snowflake {
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 30px 30px;
-            opacity: 0.3;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
             z-index: 1;
+            animation: snow linear infinite;
         }
 
+        .christmas-ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            z-index: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .christmas-tree {
+            position: absolute;
+            font-size: 40px;
+            color: var(--new-year-green);
+            z-index: 1;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .gift-box {
+            position: absolute;
+            font-size: 30px;
+            z-index: 1;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .star {
+            position: absolute;
+            color: var(--new-year-gold);
+            font-size: 24px;
+            z-index: 1;
+            animation: twinkle 2s infinite;
+        }
+
+        /* Создаем снежинки */
+        .snowflake:nth-child(1) { left: 10%; width: 10px; height: 10px; animation-duration: 10s; animation-delay: 0s; }
+        .snowflake:nth-child(2) { left: 20%; width: 12px; height: 12px; animation-duration: 12s; animation-delay: 1s; }
+        .snowflake:nth-child(3) { left: 30%; width: 8px; height: 8px; animation-duration: 8s; animation-delay: 2s; }
+        .snowflake:nth-child(4) { left: 40%; width: 14px; height: 14px; animation-duration: 14s; animation-delay: 3s; }
+        .snowflake:nth-child(5) { left: 50%; width: 10px; height: 10px; animation-duration: 10s; animation-delay: 4s; }
+        .snowflake:nth-child(6) { left: 60%; width: 12px; height: 12px; animation-duration: 12s; animation-delay: 5s; }
+        .snowflake:nth-child(7) { left: 70%; width: 9px; height: 9px; animation-duration: 9s; animation-delay: 6s; }
+        .snowflake:nth-child(8) { left: 80%; width: 11px; height: 11px; animation-duration: 11s; animation-delay: 7s; }
+        .snowflake:nth-child(9) { left: 90%; width: 13px; height: 13px; animation-duration: 13s; animation-delay: 8s; }
+
+        /* Новогодние шары */
+        .christmas-ball:nth-child(10) { left: 15%; top: 20%; background: var(--new-year-red); animation-delay: 0s; }
+        .christmas-ball:nth-child(11) { left: 85%; top: 30%; background: var(--new-year-green); animation-delay: 1s; }
+        .christmas-ball:nth-child(12) { left: 25%; top: 80%; background: var(--new-year-gold); animation-delay: 2s; }
+        .christmas-ball:nth-child(13) { left: 75%; top: 70%; background: var(--new-year-blue); animation-delay: 3s; }
+
+        /* Елки */
+        .christmas-tree:nth-child(14) { left: 5%; top: 10%; animation-delay: 0s; }
+        .christmas-tree:nth-child(15) { left: 95%; top: 20%; animation-delay: 2s; }
+
+        /* Подарки */
+        .gift-box:nth-child(16) { left: 10%; top: 70%; color: var(--new-year-red); animation-delay: 1s; }
+        .gift-box:nth-child(17) { left: 90%; top: 80%; color: var(--new-year-green); animation-delay: 3s; }
+
+        /* Звезды */
+        .star:nth-child(18) { left: 50%; top: 15%; animation-delay: 0s; }
+        .star:nth-child(19) { left: 30%; top: 40%; animation-delay: 1s; }
+        .star:nth-child(20) { left: 70%; top: 60%; animation-delay: 2s; }
+
         .login-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: var(--border-radius);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
             width: 100%;
             max-width: 500px;
             padding: 40px 35px;
@@ -92,6 +174,23 @@
             animation: fadeInUp 0.6s ease-out;
             position: relative;
             z-index: 2;
+            border: 3px solid var(--new-year-gold);
+            overflow: hidden;
+        }
+
+        /* Новогодний баннер на форме */
+        .new-year-banner {
+            position: absolute;
+            top: 0;
+            right: -50px;
+            background: linear-gradient(45deg, var(--new-year-red), var(--new-year-green), var(--new-year-gold));
+            color: white;
+            padding: 8px 60px;
+            transform: rotate(45deg);
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes fadeInUp {
@@ -122,14 +221,14 @@
         .logo-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, var(--new-year-red) 0%, var(--new-year-green) 100%);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 28px;
-            box-shadow: 0 8px 20px rgba(42, 92, 170, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .logo-text {
@@ -139,7 +238,7 @@
         .logo-text h1 {
             font-size: 32px;
             font-weight: 800;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(90deg, var(--new-year-red) 0%, var(--new-year-green) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -1px;
@@ -158,10 +257,40 @@
             font-weight: 500;
         }
 
+        .new-year-greeting {
+            background: linear-gradient(90deg, var(--new-year-red), var(--new-year-green));
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
         .login-tabs {
             display: flex;
             margin-bottom: 25px;
             border-bottom: 2px solid var(--gray-light);
+            position: relative;
+        }
+
+        .login-tabs::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--new-year-red), var(--new-year-green));
+            transition: var(--transition);
+        }
+
+        .login-tabs.register-active::after {
+            left: 50%;
         }
 
         .login-tab {
@@ -178,21 +307,11 @@
         }
 
         .login-tab.active {
-            color: var(--primary);
-        }
-
-        .login-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--primary);
+            color: var(--new-year-green);
         }
 
         .login-tab:hover {
-            color: var(--primary-dark);
+            color: var(--new-year-red);
         }
 
         .login-form {
@@ -227,12 +346,13 @@
             font-size: 16px;
             transition: var(--transition);
             font-family: 'Roboto', sans-serif;
+            background: white;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(42, 92, 170, 0.1);
+            border-color: var(--new-year-green);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
         }
 
         .form-select {
@@ -249,8 +369,8 @@
 
         .form-select:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(42, 92, 170, 0.1);
+            border-color: var(--new-year-green);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
         }
 
         .password-container {
@@ -271,7 +391,7 @@
         }
 
         .toggle-password:hover {
-            color: var(--primary);
+            color: var(--new-year-green);
         }
 
         .password-strength {
@@ -316,16 +436,16 @@
         }
 
         .strength-strong .strength-fill {
-            background: var(--success);
+            background: var(--new-year-green);
             width: 100%;
         }
 
         .password-requirements {
             margin-top: 15px;
             padding: 15px;
-            background: var(--light);
+            background: rgba(46, 125, 50, 0.05);
             border-radius: var(--border-radius-sm);
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--new-year-green);
         }
 
         .password-requirements h4 {
@@ -348,11 +468,11 @@
         }
 
         .requirement.valid {
-            color: var(--success);
+            color: var(--new-year-green);
         }
 
         .requirement.valid i {
-            color: var(--success);
+            color: var(--new-year-green);
         }
 
         .requirement.invalid i {
@@ -362,9 +482,9 @@
         .generate-password-btn {
             width: 100%;
             padding: 12px;
-            background: var(--light);
-            color: var(--primary);
-            border: 2px dashed var(--primary-light);
+            background: linear-gradient(90deg, var(--new-year-red), var(--new-year-green));
+            color: white;
+            border: none;
             border-radius: var(--border-radius-sm);
             font-size: 14px;
             font-weight: 600;
@@ -375,18 +495,18 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .generate-password-btn:hover {
-            background: var(--primary-light);
-            color: white;
-            border-style: solid;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .login-btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(90deg, var(--secondary) 0%, var(--secondary-light) 100%);
+            background: linear-gradient(90deg, var(--new-year-red) 0%, var(--new-year-green) 100%);
             color: white;
             border: none;
             border-radius: var(--border-radius-sm);
@@ -395,7 +515,7 @@
             cursor: pointer;
             transition: var(--transition);
             margin-top: 20px;
-            box-shadow: 0 6px 15px rgba(255, 122, 0, 0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -404,7 +524,7 @@
 
         .login-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 122, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .login-btn:active {
@@ -419,9 +539,9 @@
         }
 
         .login-error {
-            background: rgba(245, 101, 101, 0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
+            background: rgba(211, 47, 47, 0.1);
+            border: 1px solid var(--new-year-red);
+            color: var(--new-year-red);
             padding: 12px 15px;
             border-radius: var(--border-radius-sm);
             margin-bottom: 20px;
@@ -451,9 +571,10 @@
         .remember-me input {
             width: 18px;
             height: 18px;
+            accent-color: var(--new-year-green);
         }
 
-        /* Main App */
+        /* Main App (без новогоднего дизайна) */
         .main-app {
             display: none;
             opacity: 0;
@@ -1518,140 +1639,6 @@
             justify-content: center;
         }
 
-        /* Account Manager */
-        .account-manager {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 43, 60, 0.9);
-            z-index: 4000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .account-manager.active {
-            display: flex;
-        }
-
-        .account-container {
-            background: white;
-            border-radius: var(--border-radius);
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-        }
-
-        .account-header {
-            padding: 25px 30px;
-            border-bottom: 1px solid var(--gray-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .account-body {
-            padding: 30px;
-        }
-
-        .accounts-list {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 25px;
-            border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius-sm);
-        }
-
-        .account-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--gray-light);
-            transition: var(--transition);
-        }
-
-        .account-item:hover {
-            background: var(--light);
-        }
-
-        .account-item:last-child {
-            border-bottom: none;
-        }
-
-        .account-item.active {
-            background: var(--light);
-            border-left: 4px solid var(--primary);
-        }
-
-        .account-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .account-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .account-details h4 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .account-details p {
-            font-size: 13px;
-            color: var(--gray);
-        }
-
-        .account-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .account-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light);
-            border: 1px solid var(--gray-light);
-            color: var(--gray-dark);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .account-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .account-btn.delete:hover {
-            background: var(--danger);
-            border-color: var(--danger);
-        }
-
         /* Responsive */
         @media (max-width: 1200px) {
             .main-content {
@@ -1716,7 +1703,7 @@
                 gap: 30px;
             }
             
-            .modal-body, .account-body {
+            .modal-body {
                 padding: 20px;
             }
             
@@ -1730,13 +1717,51 @@
                 width: 45px;
                 height: 45px;
             }
+            
+            .new-year-banner {
+                right: -60px;
+                padding: 8px 70px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
+        <!-- Снежинки -->
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        <div class="snowflake"></div>
+        
+        <!-- Новогодние украшения -->
+        <div class="christmas-ball"></div>
+        <div class="christmas-ball"></div>
+        <div class="christmas-ball"></div>
+        <div class="christmas-ball"></div>
+        
+        <div class="christmas-tree"><i class="fas fa-tree"></i></div>
+        <div class="christmas-tree"><i class="fas fa-tree"></i></div>
+        
+        <div class="gift-box"><i class="fas fa-gift"></i></div>
+        <div class="gift-box"><i class="fas fa-gift"></i></div>
+        
+        <div class="star"><i class="fas fa-star"></i></div>
+        <div class="star"><i class="fas fa-star"></i></div>
+        <div class="star"><i class="fas fa-star"></i></div>
+        
         <div class="login-container">
+            <!-- Новогодний баннер -->
+            <div class="new-year-banner">
+                С НОВЫМ ГОДОМ!
+            </div>
+            
             <div class="login-logo">
                 <div class="logo-main">
                     <div class="logo-icon">
@@ -1748,11 +1773,17 @@
                     </div>
                 </div>
                 <div class="login-subtitle">
-                    Вход в защищенную систему
+                    Новогодняя версия системы
                 </div>
             </div>
             
-            <div class="login-tabs">
+            <div class="new-year-greeting">
+                <i class="fas fa-tree"></i>
+                <span>Счастливого Нового Года и Рождества!</span>
+                <i class="fas fa-star"></i>
+            </div>
+            
+            <div class="login-tabs" id="loginTabs">
                 <button class="login-tab active" id="loginTab">Вход</button>
                 <button class="login-tab" id="registerTab">Регистрация</button>
             </div>
@@ -1764,11 +1795,8 @@
             <!-- Форма входа -->
             <form class="login-form active" id="loginForm">
                 <div class="form-group">
-                    <label for="loginEmployee"><i class="fas fa-user"></i> Сотрудник</label>
-                    <select id="loginEmployee" class="form-select" required>
-                        <option value="">Выберите сотрудника</option>
-                        <!-- Опции будут заполнены JavaScript -->
-                    </select>
+                    <label for="loginUsername"><i class="fas fa-user"></i> Логин</label>
+                    <input type="text" id="loginUsername" class="form-input" placeholder="Введите ваш логин" required autofocus>
                 </div>
                 
                 <div class="form-group">
@@ -1791,17 +1819,40 @@
                 </button>
                 
                 <div class="login-hint">
-                    <p><i class="fas fa-info-circle"></i> Для входа выберите сотрудника и введите пароль</p>
+                    <p><i class="fas fa-info-circle"></i> Для входа используйте логин и пароль, созданные при регистрации</p>
                 </div>
             </form>
             
             <!-- Форма регистрации -->
             <form class="login-form" id="registerForm">
                 <div class="form-group">
-                    <label for="registerEmployee"><i class="fas fa-user-plus"></i> Сотрудник</label>
-                    <select id="registerEmployee" class="form-select" required>
-                        <option value="">Выберите сотрудника</option>
-                        <!-- Опции будут заполнены JavaScript -->
+                    <label for="registerUsername"><i class="fas fa-user-plus"></i> Логин</label>
+                    <input type="text" id="registerUsername" class="form-input" placeholder="Придумайте уникальный логин" required>
+                    <div style="font-size: 12px; color: var(--gray); margin-top: 5px;">
+                        <i class="fas fa-info-circle"></i> Логин должен быть уникальным и содержать только латинские буквы и цифры
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerFirstName"><i class="fas fa-user"></i> Имя</label>
+                    <input type="text" id="registerFirstName" class="form-input" placeholder="Введите ваше имя" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerLastName"><i class="fas fa-user-tag"></i> Фамилия</label>
+                    <input type="text" id="registerLastName" class="form-input" placeholder="Введите вашу фамилию" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPosition"><i class="fas fa-briefcase"></i> Должность</label>
+                    <select id="registerPosition" class="form-select" required>
+                        <option value="">Выберите должность</option>
+                        <option value="специалист ТП">Специалист ТП</option>
+                        <option value="старший специалист ТП">Старший специалист ТП</option>
+                        <option valueменеджер">Менеджер</option>
+                        <option value="администратор">Администратор</option>
+                        <option value="технический специалист">Технический специалист</option>
+                        <option value="руководитель отдела">Руководитель отдела</option>
                     </select>
                 </div>
                 
@@ -1868,7 +1919,7 @@
                 </button>
                 
                 <div class="login-hint">
-                    <p><i class="fas fa-shield-alt"></i> Пароль должен быть надежным и содержать различные типы символов</p>
+                    <p><i class="fas fa-shield-alt"></i> После регистрации вы сможете войти в систему с созданным логином и паролем</p>
                 </div>
             </form>
         </div>
@@ -1879,30 +1930,6 @@
         <!-- Scroll to top button -->
         <div class="scroll-top" id="scrollTop" title="Наверх">
             <i class="fas fa-chevron-up"></i>
-        </div>
-        
-        <!-- Account Manager -->
-        <div class="account-manager" id="accountManager">
-            <div class="account-container">
-                <div class="account-header">
-                    <h3 class="modal-title"><i class="fas fa-users"></i> Управление аккаунтами</h3>
-                    <button class="modal-close" id="accountClose">&times;</button>
-                </div>
-                <div class="account-body">
-                    <h4 style="margin-bottom: 20px;">Сохраненные аккаунты</h4>
-                    <div class="accounts-list" id="accountsList">
-                        <!-- Аккаунты будут заполнены JavaScript -->
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" id="accountCancel">
-                            <i class="fas fa-times"></i> Закрыть
-                        </button>
-                        <button class="btn btn-primary" id="addAccountBtn">
-                            <i class="fas fa-plus"></i> Добавить аккаунт
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <!-- Header -->
@@ -1921,9 +1948,6 @@
                     <div class="action-buttons">
                         <button class="header-btn home-btn" id="homeBtn" title="На главную">
                             <i class="fas fa-home"></i>
-                        </button>
-                        <button class="header-btn" id="accountBtn" title="Управление аккаунтами">
-                            <i class="fas fa-users"></i>
                         </button>
                         <button class="header-btn notification-bell" id="notificationBtn" title="Уведомления">
                             <i class="fas fa-bell"></i>
@@ -2164,7 +2188,7 @@
                 
                 <div class="copyright">
                     &copy; 2023 Компания "Сойка". Все права защищены. <br>
-                    <small>База знаний сотрудников v4.0 | Последнее обновление: 20.11.2023</small>
+                    <small>База знаний сотрудников v5.0 | Новогоднее обновление</small>
                 </div>
             </div>
         </footer>
@@ -2230,38 +2254,6 @@
     </div>
 
     <script>
-        // Список сотрудников компании
-        const companyEmployees = [
-            { 
-                id: 1, 
-                firstName: "Алина", 
-                lastName: "Большакова", 
-                position: "старший специалист ТП",
-                fullName: "Алина Большакова"
-            },
-            { 
-                id: 2, 
-                firstName: "Владимир", 
-                lastName: "Чуприна", 
-                position: "специалист ТП",
-                fullName: "Чуприна Владимир"
-            },
-            { 
-                id: 3, 
-                firstName: "Олеся", 
-                lastName: "Наумова", 
-                position: "специалист ТП",
-                fullName: "Олеся Наумова"
-            },
-            { 
-                id: 4, 
-                firstName: "Яна", 
-                lastName: "Ярская", 
-                position: "специалист ТП",
-                fullName: "Ярская Яна"
-            }
-        ];
-
         // Scripts data
         const scriptsData = [
             {
@@ -2380,55 +2372,52 @@
             },
             
             // Add new account
-            addAccount: function(employeeId, password) {
+            addAccount: function(username, firstName, lastName, position, password) {
                 const accounts = this.getAccounts();
-                const employee = companyEmployees.find(emp => emp.id === employeeId);
                 
-                if (!employee) return false;
-                
-                // Check if account already exists
-                const existingAccount = accounts.find(acc => acc.employeeId === employeeId);
+                // Check if username already exists
+                const existingAccount = accounts.find(acc => acc.username === username);
                 if (existingAccount) {
-                    existingAccount.password = password;
-                    existingAccount.updatedAt = new Date().toISOString();
-                } else {
-                    accounts.push({
-                        employeeId: employeeId,
-                        password: password,
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    });
+                    return { success: false, message: "Логин уже занят. Выберите другой логин." };
                 }
                 
+                // Validate username (only latin letters and numbers)
+                if (!/^[a-zA-Z0-9]+$/.test(username)) {
+                    return { success: false, message: "Логин должен содержать только латинские буквы и цифры." };
+                }
+                
+                // Check username length
+                if (username.length < 3) {
+                    return { success: false, message: "Логин должен содержать не менее 3 символов." };
+                }
+                
+                accounts.push({
+                    username: username,
+                    firstName: firstName,
+                    lastName: lastName,
+                    position: position,
+                    password: password,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                });
+                
                 this.saveAccounts(accounts);
-                return true;
-            },
-            
-            // Remove account
-            removeAccount: function(employeeId) {
-                const accounts = this.getAccounts();
-                const filteredAccounts = accounts.filter(acc => acc.employeeId !== employeeId);
-                this.saveAccounts(filteredAccounts);
-                return true;
+                return { success: true, message: "Аккаунт успешно создан!" };
             },
             
             // Verify login
-            verifyLogin: function(employeeId, password) {
+            verifyLogin: function(username, password) {
                 const accounts = this.getAccounts();
-                const account = accounts.find(acc => acc.employeeId === employeeId);
+                const account = accounts.find(acc => acc.username === username);
                 
-                if (!account) return false;
-                return account.password === password;
-            },
-            
-            // Get employee by ID
-            getEmployeeById: function(employeeId) {
-                return companyEmployees.find(emp => emp.id === employeeId);
-            },
-            
-            // Get employee by name
-            getEmployeeByName: function(fullName) {
-                return companyEmployees.find(emp => emp.fullName === fullName);
+                if (!account) return { success: false, message: "Пользователь с таким логином не найден." };
+                if (account.password !== password) return { success: false, message: "Неверный пароль." };
+                
+                return { 
+                    success: true, 
+                    message: "Вход выполнен успешно!",
+                    account: account
+                };
             }
         };
 
@@ -2454,15 +2443,19 @@
         // DOM elements
         const loginScreen = document.getElementById('loginScreen');
         const mainApp = document.getElementById('mainApp');
+        const loginTabs = document.getElementById('loginTabs');
         const loginTab = document.getElementById('loginTab');
         const registerTab = document.getElementById('registerTab');
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
         const loginError = document.getElementById('loginError');
         const errorMessage = document.getElementById('errorMessage');
-        const loginEmployeeSelect = document.getElementById('loginEmployee');
-        const registerEmployeeSelect = document.getElementById('registerEmployee');
+        const loginUsernameInput = document.getElementById('loginUsername');
         const loginPasswordInput = document.getElementById('loginPassword');
+        const registerUsernameInput = document.getElementById('registerUsername');
+        const registerFirstNameInput = document.getElementById('registerFirstName');
+        const registerLastNameInput = document.getElementById('registerLastName');
+        const registerPositionSelect = document.getElementById('registerPosition');
         const registerPasswordInput = document.getElementById('registerPassword');
         const confirmPasswordInput = document.getElementById('confirmPassword');
         const passwordStrength = document.getElementById('passwordStrength');
@@ -2477,12 +2470,6 @@
         const logoutBtn = document.getElementById('logoutBtn');
         const scrollTopBtn = document.getElementById('scrollTop');
         const notificationBtn = document.getElementById('notificationBtn');
-        const accountBtn = document.getElementById('accountBtn');
-        const accountManager = document.getElementById('accountManager');
-        const accountClose = document.getElementById('accountClose');
-        const accountCancel = document.getElementById('accountCancel');
-        const accountsList = document.getElementById('accountsList');
-        const addAccountBtn = document.getElementById('addAccountBtn');
         
         // Main app DOM elements
         const scriptsGrid = document.getElementById('scriptsGrid');
@@ -2516,24 +2503,12 @@
 
         // Initialize the application
         function init() {
-            // Populate employee selects
-            populateEmployeeSelects();
-            
             // Check if user is already logged in
             const savedUser = localStorage.getItem('soyka_current_user');
             if (savedUser) {
                 const userData = JSON.parse(savedUser);
-                const employee = AccountManager.getEmployeeById(userData.employeeId);
-                
-                if (employee) {
-                    AppState.currentUser = {
-                        employee: employee,
-                        loginTime: new Date().toISOString()
-                    };
-                    showMainApp();
-                } else {
-                    showLoginScreen();
-                }
+                AppState.currentUser = userData;
+                showMainApp();
             } else {
                 showLoginScreen();
             }
@@ -2543,41 +2518,6 @@
             
             // Set up scroll event listener
             window.addEventListener('scroll', handleScroll);
-        }
-
-        // Populate employee dropdowns
-        function populateEmployeeSelects() {
-            // Clear existing options
-            loginEmployeeSelect.innerHTML = '<option value="">Выберите сотрудника</option>';
-            registerEmployeeSelect.innerHTML = '<option value="">Выберите сотрудника</option>';
-            
-            // Get saved accounts
-            const accounts = AccountManager.getAccounts();
-            
-            // Add employees to login select
-            companyEmployees.forEach(employee => {
-                const account = accounts.find(acc => acc.employeeId === employee.id);
-                const option = document.createElement('option');
-                option.value = employee.id;
-                option.textContent = `${employee.fullName} - ${employee.position}`;
-                if (account) {
-                    option.textContent += ' (аккаунт создан)';
-                }
-                loginEmployeeSelect.appendChild(option);
-            });
-            
-            // Add employees to register select
-            companyEmployees.forEach(employee => {
-                const account = accounts.find(acc => acc.employeeId === employee.id);
-                const option = document.createElement('option');
-                option.value = employee.id;
-                option.textContent = `${employee.fullName} - ${employee.position}`;
-                if (account) {
-                    option.textContent += ' (аккаунт уже существует)';
-                    option.disabled = true;
-                }
-                registerEmployeeSelect.appendChild(option);
-            });
         }
 
         // Show login screen
@@ -2611,15 +2551,15 @@
         // Update user interface with user data
         function updateUserInterface() {
             const user = AppState.currentUser;
-            if (!user || !user.employee) return;
+            if (!user) return;
             
             // Update user profile
-            const initials = `${user.employee.firstName[0]}${user.employee.lastName[0]}`.toUpperCase();
+            const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
             userProfile.innerHTML = `
                 <div class="user-avatar">${initials}</div>
                 <div class="user-info">
-                    <h3>${user.employee.fullName} <span class="badge">${user.employee.position}</span></h3>
-                    <p>Работает с ${new Date(user.loginTime).toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}</p>
+                    <h3>${user.firstName} ${user.lastName} <span class="badge">${user.position}</span></h3>
+                    <p>Логин: ${user.username}</p>
                 </div>
             `;
             
@@ -2631,7 +2571,7 @@
             else if (hours < 18) greeting = "Добрый день";
             else greeting = "Добрый вечер";
             
-            welcomeMessage.textContent = `${greeting}, ${user.employee.firstName}!`;
+            welcomeMessage.textContent = `${greeting}, ${user.firstName}!`;
             welcomeSubtitle.textContent = `База знаний содержит все необходимые скрипты для эффективной работы. Сегодня у вас ${AppState.stats.todayUses} использований скриптов.`;
         }
 
@@ -2667,11 +2607,15 @@
             if (tabName === 'login') {
                 loginTab.classList.add('active');
                 loginForm.classList.add('active');
+                loginTabs.classList.remove('register-active');
                 loginError.classList.remove('show');
+                loginUsernameInput.focus();
             } else {
                 registerTab.classList.add('active');
                 registerForm.classList.add('active');
+                loginTabs.classList.add('register-active');
                 loginError.classList.remove('show');
+                registerUsernameInput.focus();
             }
         }
 
@@ -2991,71 +2935,6 @@
             }
         }
 
-        // Show account manager
-        function showAccountManager() {
-            accountManager.classList.add('active');
-            renderAccountsList();
-        }
-
-        // Render accounts list
-        function renderAccountsList() {
-            const accounts = AccountManager.getAccounts();
-            accountsList.innerHTML = '';
-            
-            if (accounts.length === 0) {
-                accountsList.innerHTML = `
-                    <div style="text-align: center; padding: 40px 20px; color: var(--gray);">
-                        <i class="fas fa-users" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
-                        <h4 style="margin-bottom: 10px;">Нет сохраненных аккаунтов</h4>
-                        <p>Зарегистрируйте аккаунты сотрудников во вкладке "Регистрация"</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            accounts.forEach(account => {
-                const employee = AccountManager.getEmployeeById(account.employeeId);
-                if (!employee) return;
-                
-                const isCurrent = AppState.currentUser && AppState.currentUser.employee.id === employee.id;
-                const initials = `${employee.firstName[0]}${employee.lastName[0]}`.toUpperCase();
-                
-                const accountElement = document.createElement('div');
-                accountElement.className = `account-item ${isCurrent ? 'active' : ''}`;
-                accountElement.innerHTML = `
-                    <div class="account-info">
-                        <div class="account-avatar">${initials}</div>
-                        <div class="account-details">
-                            <h4>${employee.fullName}</h4>
-                            <p>${employee.position} • Создан: ${new Date(account.createdAt).toLocaleDateString('ru-RU')}</p>
-                        </div>
-                    </div>
-                    <div class="account-actions">
-                        <button class="account-btn delete" data-id="${employee.id}" title="Удалить аккаунт">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                
-                accountsList.appendChild(accountElement);
-            });
-            
-            // Add event listeners to delete buttons
-            document.querySelectorAll('.account-btn.delete').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const employeeId = parseInt(this.getAttribute('data-id'));
-                    const employee = AccountManager.getEmployeeById(employeeId);
-                    
-                    if (confirm(`Вы уверены, что хотите удалить аккаунт ${employee.fullName}?`)) {
-                        AccountManager.removeAccount(employeeId);
-                        renderAccountsList();
-                        populateEmployeeSelects();
-                        showToast('Аккаунт удален', `Аккаунт ${employee.fullName} успешно удален`);
-                    }
-                });
-            });
-        }
-
         // Setup event listeners
         function setupEventListeners() {
             // Tab switching
@@ -3091,39 +2970,36 @@
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const employeeId = parseInt(loginEmployeeSelect.value);
+                const username = loginUsernameInput.value.trim();
                 const password = loginPasswordInput.value;
                 
-                if (!employeeId || !password) {
-                    errorMessage.textContent = 'Пожалуйста, выберите сотрудника и введите пароль';
+                if (!username || !password) {
+                    errorMessage.textContent = 'Пожалуйста, введите логин и пароль';
                     loginError.classList.add('show');
                     return;
                 }
                 
                 // Verify login
-                const isValid = AccountManager.verifyLogin(employeeId, password);
+                const result = AccountManager.verifyLogin(username, password);
                 
-                if (!isValid) {
-                    errorMessage.textContent = 'Неверный пароль. Попробуйте еще раз';
+                if (!result.success) {
+                    errorMessage.textContent = result.message;
                     loginError.classList.add('show');
                     return;
                 }
                 
-                // Get employee data
-                const employee = AccountManager.getEmployeeById(employeeId);
-                
                 // Save current user
                 AppState.currentUser = {
-                    employee: employee,
+                    username: result.account.username,
+                    firstName: result.account.firstName,
+                    lastName: result.account.lastName,
+                    position: result.account.position,
                     loginTime: new Date().toISOString()
                 };
                 
                 // Save to localStorage if remember me is checked
                 if (rememberMe.checked) {
-                    localStorage.setItem('soyka_current_user', JSON.stringify({
-                        employeeId: employeeId,
-                        loginTime: AppState.currentUser.loginTime
-                    }));
+                    localStorage.setItem('soyka_current_user', JSON.stringify(AppState.currentUser));
                 }
                 
                 // Hide error and show main app
@@ -3135,12 +3011,16 @@
             registerForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const employeeId = parseInt(registerEmployeeSelect.value);
+                const username = registerUsernameInput.value.trim();
+                const firstName = registerFirstNameInput.value.trim();
+                const lastName = registerLastNameInput.value.trim();
+                const position = registerPositionSelect.value;
                 const password = registerPasswordInput.value;
                 const confirmPassword = confirmPasswordInput.value;
                 
-                if (!employeeId) {
-                    errorMessage.textContent = 'Пожалуйста, выберите сотрудника';
+                // Validate inputs
+                if (!username || !firstName || !lastName || !position || !password || !confirmPassword) {
+                    errorMessage.textContent = 'Пожалуйста, заполните все поля';
                     loginError.classList.add('show');
                     return;
                 }
@@ -3160,26 +3040,28 @@
                 }
                 
                 // Add account
-                const success = AccountManager.addAccount(employeeId, password);
+                const result = AccountManager.addAccount(username, firstName, lastName, position, password);
                 
-                if (success) {
-                    errorMessage.textContent = 'Аккаунт успешно создан! Теперь вы можете войти';
+                if (result.success) {
+                    errorMessage.textContent = result.message + ' Теперь вы можете войти';
                     loginError.classList.add('show');
                     loginError.style.backgroundColor = 'rgba(56, 178, 172, 0.1)';
                     loginError.style.borderColor = 'var(--success)';
                     loginError.style.color = 'var(--success)';
                     
+                    // Clear form
+                    registerForm.reset();
+                    
                     // Switch to login tab after a delay
                     setTimeout(() => {
                         switchTab('login');
-                        populateEmployeeSelects();
                         loginError.classList.remove('show');
                         loginError.style.backgroundColor = '';
                         loginError.style.borderColor = '';
                         loginError.style.color = '';
                     }, 2000);
                 } else {
-                    errorMessage.textContent = 'Ошибка при создании аккаунта';
+                    errorMessage.textContent = result.message;
                     loginError.classList.add('show');
                 }
             });
@@ -3206,15 +3088,6 @@
                     top: 0,
                     behavior: 'smooth'
                 });
-            });
-            
-            // Account manager
-            accountBtn.addEventListener('click', showAccountManager);
-            accountClose.addEventListener('click', () => accountManager.classList.remove('active'));
-            accountCancel.addEventListener('click', () => accountManager.classList.remove('active'));
-            addAccountBtn.addEventListener('click', () => {
-                accountManager.classList.remove('active');
-                switchTab('register');
             });
             
             // Notification button
